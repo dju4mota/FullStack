@@ -4,7 +4,7 @@ const {uuid} = require("uuidv4");
 
 app.use(express.json())  // usar json no body dos parametros 
 
-let projects = []
+const projects = []
 
 function logs(req, res , next){
   const {method, url} = req;
