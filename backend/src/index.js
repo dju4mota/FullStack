@@ -21,7 +21,7 @@ app.use(logs)  // pode chamar junto de algum outro middleware/metodo
 app.get('/projects', (req, res) =>{  
   const {name} = req.query;
   const results = name ? projects.filter(project => project.name.includes(name))
-  : projects;
+  : projects;  // operador ternario: se n passar nome ele manda a lista toda*
   
   return res.json(results);
 })
