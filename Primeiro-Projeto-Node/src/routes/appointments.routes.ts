@@ -1,26 +1,26 @@
 import { Router } from 'express';
 import { startOfHour, parseISO, isEqual } from 'date-fns';
 import Appointment from '../models/Appointments';
+import AppointmentsRepository from '../repositories/AppointmentsRepository';
 
 const appointmentRouter = Router();
-
-const appointments: Appointment[] = []; // tipagem do typeScript
+const appointmentsRepository = new AppointmentsRepository();
 
 appointmentRouter.post('/', (request, response) => {
   const { provider, date } = request.body;
+
   const parsedDate = startOfHour(parseISO(date));
 
-  const findAppointmentInSameDate = appointments.find(appointment =>
-    isEqual(parsedDate, appointment.date),
+  const findAppointmentInSameDate = appointmentsRepository.findByDate(
+    parsedDate,
   );
 
   if (findAppointmentInSameDate) {
     return response.status(400).json({ message: 'Appointment already booked' });
   }
 
-  const appointment = new Appointment(provider, parsedDate);
+  const appointment = appointmentsRepository.create(provider, parsedDate);
 
-  appointments.push(appointment);
   return response.json(appointment);
 });
 
