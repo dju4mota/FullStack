@@ -5,26 +5,21 @@ import {
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
-  ManyToOne,
-  JoinColumn,
 } from 'typeorm';
 
-import User from './Users';
-
-@Entity('appointments') // substitui o constructor
-class Appointments {
+@Entity('users') // substitui o constructor
+class Users {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
   @Column() // tipo default = varchar
-  provider_id: string;
+  name: string;
 
-  @ManyToOne(() => User)
-  @JoinColumn({ name: 'provider_id' })
-  provider: User;
+  @Column() // tipo default = varchar
+  email: string;
 
-  @Column('timestamp with time zone')
-  date: Date;
+  @Column() // tipo default = varchar
+  password: string;
 
   @CreateDateColumn()
   created_at: Date;
@@ -33,4 +28,4 @@ class Appointments {
   update_at: Date;
 }
 
-export default Appointments;
+export default Users;
